@@ -6,15 +6,102 @@ int extraMemoryAllocated;
 
 // implements heap sort
 // extraMemoryAllocated counts bytes of memory allocated
-void heapSort(int arr[], int n)
-{
+void heapSort(int arr[], int n){
+int i, j, temp;
+    for (i = n / 2 - 1; i >= 0; i--)
+    {
+        for (j = i; j >= 0; j--)
+        {
+            if (arr[j] >= arr[2*j+1] && 2*j+1 < n)
+            {
+                temp = arr[j];
+                arr[j] = arr[2*j+1];
+                arr[2*j+1] = temp;
+            }
+            if (arr[j] >= arr[2*j+2] && 2*j+2 < n)
+            {
+                temp = arr[j];
+                arr[j] = arr[2*j+2];
+                arr[2*j+2] = temp;
+            }
+        }
+    }
+    for (i = n - 1; i > 0; i--)
+    {
+        temp = arr[0];
+        arr[0] = arr[i];
+        arr[i] = temp;
+        for (j = i / 2 - 1; j >= 0; j--)
+        {
+            if (arr[j] >= arr[2*j+1] && 2*j+1 < i)
+            {
+                temp = arr[j];
+                arr[j] = arr[2*j+1];
+                arr[2*j+1] = temp;
+            }
+            if (arr[j] >= arr[2*j+2] && 2*j+2 < i)
+            {
+                temp = arr[j];
+                arr[j] = arr[2*j+2];
+                arr[2*j+2] = temp;
+            }
+        }
+    }
 }
 
 
 // implement merge sort
 // extraMemoryAllocated counts bytes of extra memory allocated
-void mergeSort(int pData[], int l, int r)
-{
+void mergeSort(int pData[], int l, int r){
+ if (l >= r)
+    {
+        return;
+    }
+    int m = l + (r - l) / 2;
+    mergeSort(pData, l, m);
+    mergeSort(pData, m + 1, r);
+    int i, j, k;
+    int n1 = m - l + 1;
+    int n2 = r - m;
+    int L[n1], R[n2];
+    for (i = 0; i < n1; i++)
+    {
+        L[i] = pData[l + i];
+    }
+    for (j = 0; j < n2; j++)
+    {
+        R[j] = pData[m + 1 + j];
+    }
+    i = 0;
+    j = 0;
+    k = l;
+    while (i < n1 && j < n2)
+    {
+        if (L[i] <= R[j])
+        {
+            pData[k] = L[i];
+            i++;
+        }
+        else
+        {
+            pData[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+    while (i < n1)
+    {
+        pData[k] = L[i];
+        i++;
+        k++;
+    }
+    while (j < n2)
+    {
+        pData[k] = R[j];
+        j++;
+        k++;
+    }
+
 }
 
 // parses input file to an integer array
